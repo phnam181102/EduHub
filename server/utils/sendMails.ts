@@ -29,7 +29,10 @@ const sendMail = async (options: EmailOptions): Promise<void> => {
     const html: string = await ejs.renderFile(templatePath, data);
 
     const mailOptions = {
-        from: process.env.SMTP_MAIL,
+        from: {
+            name: 'EduHub',
+            address: process.env.SMTP_MAIL as string,
+        },
         to: email,
         subject,
         html,

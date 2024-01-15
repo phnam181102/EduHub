@@ -16,7 +16,6 @@
                 font-family: Arial, sans-serif;
                 font-size: 16px;
                 line-height: 1.5;
-                background-color: #fafafa;
                 color: #222;
             }
 
@@ -36,13 +35,19 @@
 
             h3 {
                 font-size: 18px;
-                color: #000;
+                color: #111;
                 font-weight: 600;
             }
 
             p {
                 margin-top: 0;
                 margin-bottom: 20px;
+                font-size: 15px;
+            }
+
+            span {
+                color: #444;
+                font-weight: 600;
             }
 
             table td {
@@ -55,10 +60,13 @@
                 max-width: 650px;
                 min-width: 450px;
                 margin: 0 auto;
+                margin-bottom: 35px;
+                border-radius: 10px;
+                overflow: hidden;
             }
 
             .email-header {
-                background: #0f2027; /* fallback for old browsers */
+                background: #0f2027;
                 background: -webkit-linear-gradient(
                     to right,
                     #2c5364,
@@ -90,6 +98,7 @@
 
             .email-footer p {
                 margin-bottom: 0;
+                font-size: 13px;
             }
 
             .code {
@@ -130,8 +139,9 @@
 
             <div class="email-footer">
                 <p>
-                    You received this because you signed up for EduHub. If you
-                    did not sign up, please ignore this email.
+                    You received this because you signed up for
+                    <span>EduHub</span>. If you did not sign up, please ignore
+                    this email.
                 </p>
             </div>
         </div>
