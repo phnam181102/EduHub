@@ -1,7 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import ErrorHandler from '../utils/ErrorHandler';
 
-export const ErrorMiddleware = (err: any, req: Request, res: Response) => {
+export const ErrorMiddleware = (
+    err: any,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     err.statusCode = err.statusCode || 500;
     err.message = err.message || 'Initial server error';
 

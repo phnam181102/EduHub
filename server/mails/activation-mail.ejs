@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>EduHub Activation Email</title>
+
+        <style type="text/css">
+            body {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+                min-width: 100%;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                background-color: #fafafa;
+                color: #222;
+            }
+
+            a {
+                color: #000;
+                text-decoration: none;
+            }
+
+            h1 {
+                font-size: 26px;
+                font-weight: 700;
+                line-height: 1.25;
+                margin-top: 0;
+                margin-bottom: 0;
+                text-align: center;
+            }
+
+            h3 {
+                font-size: 18px;
+                color: #000;
+                font-weight: 600;
+            }
+
+            p {
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+
+            table td {
+                vertical-align: top;
+            }
+
+            /* Layout */
+            .email-wrapper {
+                width: 100%;
+                max-width: 650px;
+                min-width: 450px;
+                margin: 0 auto;
+            }
+
+            .email-header {
+                background: #0f2027; /* fallback for old browsers */
+                background: -webkit-linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+                padding: 26px;
+                color: #fff;
+            }
+
+            .email-body {
+                padding: 24px;
+                background-color: #fff;
+            }
+
+            .email-footer {
+                display: flex;
+                justify-content: center;
+                padding: 24px;
+                background-color: #f6f6f6;
+            }
+
+            .email-footer p {
+                margin-bottom: 0;
+            }
+
+            .code {
+                display: inline-block;
+                background-color: #000;
+                color: #fff;
+                padding: 10px 20px;
+                font-size: 18px;
+                font-weight: 700;
+                letter-spacing: 7.5px;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="email-wrapper">
+            <div class="email-header">
+                <h1>Welcome to EduHub</h1>
+            </div>
+
+            <div class="email-body">
+                <h3>Hello <%= user.name %>,</h3>
+                <p>
+                    We’re happy you signed up for EduHub. To complete your
+                    registration and start exploring our app and engaging with
+                    the learning community, please use the following
+                    verification code:
+                </p>
+                <p class="code"><%= activationCode %></p>
+                <p>
+                    Please enter this code on the activation page within the
+                    next 5 minutes.
+                </p>
+                <p>Welcome to EduHub!</p>
+            </div>
+
+            <div class="email-footer">
+                <p>
+                    You received this because you signed up for EduHub. If you
+                    did not sign up, please ignore this email.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
