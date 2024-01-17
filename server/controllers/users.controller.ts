@@ -10,6 +10,8 @@ import { CatchAsyncError } from '../middleware/catchAsyncErrors';
 import path from 'path';
 import sendMail from '../utils/sendMails';
 import { sendToken } from '../utils/jwt';
+import { redis } from '../utils/redis';
+import { RequestCustom } from '../@types/custom';
 
 interface IRegistrationBody {
     name: string;
@@ -173,10 +175,13 @@ export const loginUser = CatchAsyncError(
 
 // Logout user
 export const logoutUser = CatchAsyncError(
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: RequestCustom, res: Response, next: NextFunction) => {
         try {
             res.cookie('access_token', '', { maxAge: 1 });
             res.cookie('refresh_token', '', { maxAge: 1 });
+
+            const userId = req.user?._id || '';
+            redis.del(userId);
 
             res.status(200).json({
                 success: true,
