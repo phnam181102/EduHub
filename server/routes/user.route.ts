@@ -2,6 +2,8 @@ import express from 'express';
 
 import {
     activateUser,
+    deleteUser,
+    getAllUsers,
     getUserInfo,
     loginUser,
     logoutUser,
@@ -11,6 +13,7 @@ import {
     updateAvatar,
     updateInfo,
     updatePassword,
+    updateUserRole,
 } from '../controllers/user.controller';
 import { authorizeRoles, isAuthenticated } from '../middleware/auth';
 
@@ -28,5 +31,24 @@ userRouter.put('/update-info', isAuthenticated, updateInfo);
 userRouter.put('/update-password', isAuthenticated, updatePassword);
 userRouter.put('/update-avatar', isAuthenticated, updateAvatar);
 userRouter.post('/social-auth', socialAuth);
+
+userRouter.get(
+  "/get-users",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAllUsers
+);
+userRouter.put(
+  "/update-role",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  updateUserRole
+);
+userRouter.delete(
+  "/delete-user/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteUser
+);
 
 export default userRouter;
