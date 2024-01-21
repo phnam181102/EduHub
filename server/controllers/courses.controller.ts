@@ -11,6 +11,7 @@ import CourseModel from "../models/course.model";
 import ErrorHandler from "../utils/ErrorHandler";
 import { redis } from "../utils/redis";
 import sendMail from "../utils/sendMails";
+import NotificationModel from "../models/notification.model";
 
 interface IAddQuestionData {
   question: string;
@@ -226,6 +227,12 @@ export const addQuestion = CatchAsyncError(
       // add this question to our course content
       courseContent.questions.push(newQuestion);
 
+      await NotificationModel.create({
+        user: req.user?._id,
+        title: "New Question Received",
+        message: `You have a new question in ${courseContent.title}`,
+      });
+
       //save the update course
       await course?.save();
 
@@ -280,6 +287,11 @@ export const addAnswer = CatchAsyncError(
 
       if (req?.user === question.user._id) {
         // create a notification
+        await NotificationModel.create({
+          user: req.user?._id,
+          title: "New Question Reply Received",
+          message: `You have a new question reply in ${courseContent.title}`,
+        });
       } else {
         const data = {
           name: question.user.name,
@@ -355,6 +367,12 @@ export const addReview = CatchAsyncError(
       }
 
       await course?.save();
+
+      await NotificationModel.create({
+        // user: req.user?._id,
+        title: "New Review Received",
+        message: `${req.user?.name} has given a review in ${course?.name}`,
+      });
 
       res.status(200).json({
         success: true,
