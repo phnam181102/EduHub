@@ -1,196 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Order Confirmation</title>
 
-<head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <title>Order Confirmation</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
 
-    <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background-color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            height: 100vh;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #4f5ef1;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-            color: #fff;
-        }
-        .message {
-            text-align: center;
-            font-size: 10px;
-            margin-bottom: 20px;
-            padding-top: 50px;
-        }
-        .message-sm {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-            margin-top: 50px;
-        }
-        .message-sm > h1 {
-            text-align: center;
-            font-size: 25px;
-            font-weight: 600;
-        }
-        .course-info {
-            margin: auto;
-            padding: 20px 0px;
-            width: 100%;
-            background-color: #fff;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 2px 2px 2px 2px rgba(206, 197, 197, 0.1);
-            color: #000;
-        }
-        .course-info > h4 {
-            color: #23bd70;
-            font-size: 22px;
-            font-family: "Poppins", sans-serif;
-            font-weight: 500;
-            text-align: center;
-            padding: 0 !important;
-            margin-top: 0 !important;
-        }
-        .course-name {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        .purchase-info {
-            font-size: 16px;
-        }
-        .total {
-            font-size: 18px;
-            text-align: right;
-            margin-top: 20px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 100px;
-            color: #fff;
-        }
-        .footer > p > a {
-            text-decoration: none;
-            display: inline-block;
-            color: #fff;
-        }
-        .flex {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #9999993f;
-        }
-        .flex h4 {
-            font-weight: 400;
-            margin-bottom: 5px;
-        }
-        .flex.lg {
-            width: 85%;
-            margin: auto;
-            border-bottom: none;
-        }
-        .first-td {
-            text-transform: uppercase;
-            color: #0000006c;
-            font-size: 16px;
-            padding: 5px 0px;
-            width: 1%;
-            font-weight: 600 !important;
-        }
-        .second-td {
-            font-weight: 500 !important;
-            color: #000000af;
-            font-size: 15px;
-        }
-        .title {
-            font-size: 16px !important;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        td {
-            padding: 10px;
-            text-align: center;
-            width: 28.33%;
-        }
-        td.col-2 {
-            width: 100%;
-            text-align: left;
-            padding: 0px;
-            margin: 0;
-        }
-        .m-auto {
-            width: 100%;
-            margin: auto;
-        }
-        .table-row {
-            width: 70%;
-            display: block;
-            margin: auto;
-            padding: 10px 0;
-        }
-    </style>
-</head>
-<body>
-</body>
-    <div class="container">
-        <div class="message-sm">
-            <h1>Your Elearning order is comfirmed!</h1>
-            <p>And we're just as excited as you are.</p>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+
+            .email-wrapper {
+                width: 100%;
+                max-width: 650px;
+                min-width: 450px;
+                margin: 0 auto;
+                padding: 35px;
+                background: #0f2027;
+                background: -webkit-linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0, 1);
+                color: #fff;
+            }
+
+            .message {
+                text-align: center;
+                font-size: 18px;
+            }
+
+            .message-sm {
+                text-align: center;
+                font-size: 18px;
+            }
+
+            .message-sm > h1 {
+                text-align: center;
+                font-size: 26px;
+                font-weight: 600;
+                margin-bottom: 6px;
+            }
+
+            .message-sm > p {
+                margin: 0 !important;
+            }
+
+            .course-info {
+                padding: 20px;
+                width: 100%;
+                background-color: #fff;
+                border-radius: 10px;
+                box-shadow: 2px 2px 2px 2px rgba(206, 197, 197, 0.1);
+                color: #000;
+            }
+
+            .course-info h4 {
+                margin: 0;
+                margin-bottom: 6px;
+                color: #000;
+                font-size: 20px;
+                font-family: 'Poppins', sans-serif;
+                font-weight: 600;
+            }
+
+            .order-summary span {
+                display: inline-block;
+                font-size: 15px;
+                min-width: 90px;
+            }
+
+            .order-summary {
+                margin-bottom: 25px;
+            }
+
+            .order-summary p {
+                margin: 0;
+            }
+
+            .course-name {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .purchase-info {
+                font-size: 16px;
+            }
+
+            .total {
+                font-size: 18px;
+                text-align: right;
+                margin-top: 20px;
+            }
+
+            .footer {
+                text-align: center;
+                margin-top: 65px;
+                color: #ebebeb;
+                font-size: 15px;
+            }
+
+            .footer > p {
+                margin: 0;
+                margin-top: 4px;
+            }
+
+            .footer > p > a {
+                text-decoration: none;
+                display: inline-block;
+                font-weight: 600;
+                color: #fff;
+            }
+
+            .flex {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid #9999993f;
+            }
+
+            .flex h4 {
+                font-weight: 400;
+                margin-bottom: 5px;
+            }
+
+            .flex.lg {
+                width: 85%;
+                margin: auto;
+                border-bottom: none;
+            }
+
+            .first-td {
+                text-transform: uppercase;
+                color: #0000006c;
+                font-size: 16px;
+                line-height: 1;
+                letter-spacing: 0.4px;
+                font-weight: 600;
+            }
+
+            .second-td {
+                font-size: 16px;
+                font-weight: 500 !important;
+                padding: 25px 0;
+            }
+
+            .title {
+                font-size: 16px !important;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            td {
+                padding: 10px 0;
+                text-align: center;
+                width: 28.33%;
+                font-size: 16px;
+            }
+
+            td.col-1 {
+                text-align: left;
+                width: 56.66%;
+                padding-left: 10px;
+            }
+
+            td.col-2 {
+                text-align: center;
+                width: 14.17%;
+            }
+
+            td.col-3 {
+                text-align: right;
+                width: 14.17%;
+                padding-right: 10px;
+            }
+
+            td.left {
+                width: 100%;
+                text-align: left;
+                padding: 0;
+                margin: 0;
+            }
+
+            .m-auto {
+                width: 100%;
+                margin: auto;
+            }
+
+            .row {
+                padding: 30px 10px 12px 0;
+                text-align: right;
+                font-size: 17px;
+            }
+
+            .row p {
+                margin: 0;
+            }
+
+            .row span {
+                display: inline-block;
+                min-width: 50px;
+                margin: 0;
+            }
+
+            .row .total {
+                font-weight: 600;
+            }
+
+            .row .total-price {
+                font-size: 19px;
+                color: red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="email-wrapper">
+            <div class="message-sm">
+                <img
+                    src="https://i.ibb.co/n7h4G5x/icons8-success-120.png"
+                    alt=""
+                    max-width="150px"
+                    height="auto"
+                />
+                <h1>Your recent order is confirmed!</h1>
+                <p>
+                    Thank you for choosing
+                    <span style="font-weight: 600">EduHub</span> for your online
+                    learning journey
+                </p>
+            </div>
+
+            <br />
+            <br />
+
+            <div class="course-info">
+                <div class="order-summary">
+                    <h4>Summary:</h4>
+                    <p><span>Order #:</span><%= order._id%></p>
+                    <p><span>Order Date:</span><%= order.date%></p>
+                    <p><span>Order Total:</span>$<%= order.price%></p>
+                </div>
+
+                <table style="border-bottom: 2px solid #00000012">
+                    <tr>
+                        <td class="col-1 first-td">Item Ordered</td>
+                        <td class="col-2 first-td">Qty</td>
+                        <td class="col-3 first-td">Price</td>
+                    </tr>
+                </table>
+
+                <table style="border-bottom: 2px solid #00000012">
+                    <tr>
+                        <td class="col-1 second-td"><%= order.name%></td>
+                        <td class="col-2 second-td">x1</td>
+                        <td class="col-3 second-td">$<%= order.price%></td>
+                    </tr>
+                </table>
+
+                <div class="row">
+                    <p>Subtotal (1 Item): <span>$<%= order.price%></span></p>
+                    <p class="total">
+                        Order Total:
+                        <span class="total-price">$<%= order.price%></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>
+                    If you have any questions, please contact our support team
+                    at
+                    <a href="mailto:eduhub.dontreply@gmail.com"
+                        >eduhub@support.com</a
+                    >
+                </p>
+                <p>&copy; 2024 EduHub. All rights reserved.</p>
+            </div>
         </div>
-        <br>
-        <br>
-        <div class="course-info">
-            <h4>Here's what you ordered: </h4>
-            <table style="border-bottom: 1px solid #0000002f">
-                <tr>
-                    <td>Order #: <%= order._id %></td>
-                    <td>Order data #: <%= order.date %></td>
-                </tr>
-            </table>
-            <table style="width: 90%; margin: auto; display: block;">
-                <tr>
-                    <td class="first-td">Item</td>
-                    <td class="first-td">Qty</td>
-                    <td class="first-td">cost</td>
-                </tr>
-            </table>
-            <table style="width: 90%; margin: auto; display: block;">
-                <tr>
-                    <td class="second-td"><%= order.name %></td>
-                    <td class="second-td">1</td>
-                    <td class="second-td"><%= order.price %></td>
-                </tr>
-            </table>
-            <table class="table-row" style="border-top: 1px solid #00000029;">
-                <tr>
-                    <td class="col-2">Subtotal: </td>
-                    <td class="col-2"><%= order.price %></td>
-                </tr>
-            </table>
-            <table class="table-row" style="margin-top: -20px;">
-                <tr>
-                    <td class="col-2">Total: </td>
-                    <td class="col-2">$<%= order.price %></td>
-                </tr>
-            </table>
-        </div>
-        <div class="footer">
-            <p>
-                If you have any questions, please contact our support team at
-                <a href="/">vanphu04052002@gmail.com</a>
-            </p>
-            <p>&copy; 2024 Elearning. All rights reserved.</p>
-        </div>
-    </div>
+    </body>
 </html>
