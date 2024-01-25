@@ -3,7 +3,7 @@ const nextConfig = {
     /* config options here */
     reactStrictMode: true,
     images: {
-        domains: ['i.ibb.co', 'localhost', 'img-c.udemycdn.com'], // <== Domain name
+        domains: ['i.ibb.co', 'localhost', 'img-c.udemycdn.com'],
     },
 };
 
