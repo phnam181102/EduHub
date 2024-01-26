@@ -1,10 +1,12 @@
 'use client';
+import { Toaster } from 'react-hot-toast';
 import { Poppins } from 'next/font/google';
+import { SessionProvider } from 'next-auth/react';
 import { Josefin_Sans } from 'next/font/google';
 import { Merriweather } from 'next/font/google';
+
 import { ThemeProvider } from './utils/theme-provider';
 import './globals.css';
-import { Toaster } from 'react-hot-toast';
 import { Providers } from './Provider';
 
 const poppins = Poppins({
@@ -36,10 +38,15 @@ export default function RootLayout({
                 className={`${poppins.variable} ${josefin.variable} ${merriweather.variable} !bg-white bg-no-repeat`}
             >
                 <Providers>
-                    <ThemeProvider attribute="class" defaultTheme="light">
-                        {children}
-                        <Toaster position="top-center" reverseOrder={false} />
-                    </ThemeProvider>
+                    <SessionProvider>
+                        <ThemeProvider attribute="class" defaultTheme="light">
+                            {children}
+                            <Toaster
+                                position="top-center"
+                                reverseOrder={false}
+                            />
+                        </ThemeProvider>
+                    </SessionProvider>
                 </Providers>
             </body>
         </html>

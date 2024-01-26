@@ -1,5 +1,5 @@
 import { apiSlice } from '../api/apiSlice';
-import { userRegistration } from './authSlice';
+import { userLoggedIn, userRegistration } from './authSlice';
 
 type RegistrationResponse = {
     message: string;
@@ -40,7 +40,61 @@ export const authApi = apiSlice.injectEndpoints({
                 },
             }),
         }),
+        login: builder.mutation({
+            query: ({ email, password }) => ({
+                url: 'login',
+                method: 'POST',
+                body: {
+                    email,
+                    password,
+                },
+                credentials: 'include' as const,
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(
+                        userLoggedIn({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            },
+        }),
+        socialAuth: builder.mutation({
+            query: ({ email, name, avatar }) => ({
+                url: 'social-auth',
+                method: 'POST',
+                body: {
+                    email,
+                    name,
+                    avatar,
+                },
+                credentials: 'include' as const,
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
+                    dispatch(
+                        userLoggedIn({
+                            accessToken: result.data.accessToken,
+                            user: result.data.user,
+                        })
+                    );
+                } catch (error: any) {
+                    console.log(error.message);
+                }
+            },
+        }),
     }),
 });
 
-export const { useRegisterMutation, useActivationMutation } = authApi;
+export const {
+    useRegisterMutation,
+    useActivationMutation,
+    useLoginMutation,
+    useSocialAuthMutation,
+} = authApi;

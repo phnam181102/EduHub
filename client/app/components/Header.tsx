@@ -1,16 +1,21 @@
-//tsrafce
 'use client';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import Image from 'next/image';
+import React, { FC, useEffect, useState } from 'react';
+
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from 'react-icons/hi';
+import avatar from '@/public/assets/avatar.png';
 
 import NavItems from '../utils/NavItems';
 import SearchBar from './SearchBar';
-import Image from 'next/image';
 import CustomModal from '../utils/CustomModal';
 import Login from './Auth/Login';
 import SignUp from './Auth/SignUp';
 import Verification from './Auth/Verification';
+import { useSession } from 'next-auth/react';
+import { useSocialAuthMutation } from '@/redux/features/auth/authApi';
+import toast from 'react-hot-toast';
 
 type Props = {
     open: boolean;
@@ -23,6 +28,24 @@ type Props = {
 const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
     const [active, setActive] = useState(false);
     const [openSideBar, setOpenSideBar] = useState(false);
+    const { user } = useSelector((state: any) => state.auth);
+    const { data } = useSession();
+    const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+
+    useEffect(() => {
+        if (!user) {
+            if (data) {
+                socialAuth({
+                    email: data?.user?.email,
+                    name: data?.user?.name,
+                    avatar: data?.user?.image,
+                });
+            }
+        }
+        if (isSuccess) {
+            toast.success('Login successfully');
+        }
+    }, [data, socialAuth, user]);
 
     if (typeof window !== 'undefined') {
         window.addEventListener('scroll', () => {
@@ -60,7 +83,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                             >
                                 <Image
                                     className="mr-2"
-                                    src={require('../../public/assets/logo.png')}
+                                    src={require('@/public/assets/logo.png')}
                                     width={50}
                                     height={50}
                                     alt="EduHub"
@@ -86,11 +109,25 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                                 />
                             </div>
 
-                            <HiOutlineUserCircle
-                                size={25}
-                                className="hidden 800px:block cursor-pointer text-black ml-3"
-                                onClick={() => setOpen(true)}
-                            />
+                            {user ? (
+                                <Link href={'/profile'} className="ml-2 p-1">
+                                    <Image
+                                        src={
+                                            user.avatar
+                                                ? require('@/public/assets/avatar.png')
+                                                : require('@/public/assets/avatar.png')
+                                        }
+                                        alt="Avatar"
+                                        className="w-[28px] h-[28px] rounded-full cursor-pointer"
+                                    />
+                                </Link>
+                            ) : (
+                                <HiOutlineUserCircle
+                                    size={25}
+                                    className="hidden 800px:block cursor-pointer text-black ml-3"
+                                    onClick={() => setOpen(true)}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -121,6 +158,8 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                     </div>
                 )}
             </div>
+
+            {/* MODALS */}
             {route === 'Login' && (
                 <>
                     {open && (
@@ -134,7 +173,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                     )}
                 </>
             )}
-
             {route === 'Sign-Up' && (
                 <>
                     {open && (
@@ -148,7 +186,6 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                     )}
                 </>
             )}
-
             {route === 'Verification' && (
                 <>
                     {open && (
