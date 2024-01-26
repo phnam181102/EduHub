@@ -14,7 +14,10 @@ import Login from './Auth/Login';
 import SignUp from './Auth/SignUp';
 import Verification from './Auth/Verification';
 import { useSession } from 'next-auth/react';
-import { useSocialAuthMutation } from '@/redux/features/auth/authApi';
+import {
+    useLogOutQuery,
+    useSocialAuthMutation,
+} from '@/redux/features/auth/authApi';
 import toast from 'react-hot-toast';
 
 type Props = {
@@ -31,6 +34,11 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
     const { user } = useSelector((state: any) => state.auth);
     const { data } = useSession();
     const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
+    const [logout, setLogout] = useState(false);
+
+    const {} = useLogOutQuery(undefined, {
+        skip: !logout ? true : false,
+    });
 
     useEffect(() => {
         if (!user) {
@@ -42,10 +50,15 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                 });
             }
         }
-        if (isSuccess) {
-            toast.success('Login successfully');
+        if (data === null) {
+            if (isSuccess) {
+                toast.success('Login successfully');
+            }
         }
-    }, [data, socialAuth, user]);
+        if (data === null) {
+            setLogout(true);
+        }
+    }, [data, isSuccess, socialAuth, user]);
 
     if (typeof window !== 'undefined') {
         window.addEventListener('scroll', () => {
@@ -114,11 +127,19 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                                     <Image
                                         src={
                                             user.avatar
-                                                ? require('@/public/assets/avatar.png')
+                                                ? user.avatar.url
                                                 : require('@/public/assets/avatar.png')
                                         }
+                                        width={28}
+                                        height={28}
                                         alt="Avatar"
                                         className="w-[28px] h-[28px] rounded-full cursor-pointer"
+                                        style={{
+                                            border:
+                                                activeItem === 4
+                                                    ? '2px solid #4d1ef9'
+                                                    : 'none',
+                                        }}
                                     />
                                 </Link>
                             ) : (

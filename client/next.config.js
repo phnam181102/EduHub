@@ -3,7 +3,12 @@ const nextConfig = {
     /* config options here */
     reactStrictMode: true,
     images: {
-        domains: ['i.ibb.co', 'localhost', 'img-c.udemycdn.com'],
+        domains: [
+            'i.ibb.co',
+            'localhost',
+            'img-c.udemycdn.com',
+            'res.cloudinary.com',
+        ],
     },
 };
 
