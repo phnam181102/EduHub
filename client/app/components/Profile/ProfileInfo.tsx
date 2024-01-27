@@ -3,8 +3,12 @@ import React, { FC, useEffect, useState } from 'react';
 import avatarDefault from '@/public/assets/avatar-lg.png';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { styles } from '@/app/styles/styles';
-import { useUpdateAvatarMutation } from '@/redux/user/userApi';
+import {
+    useEditProfileMutation,
+    useUpdateAvatarMutation,
+} from '@/redux/user/userApi';
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice';
+import toast from 'react-hot-toast';
 
 type Props = {
     avatar: string | null;
@@ -13,7 +17,14 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user.name);
-    const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+    const [
+        updateAvatar,
+        { isSuccess: updateAvatarSuccess, error: updateAvatarError },
+    ] = useUpdateAvatarMutation();
+    const [
+        editProfile,
+        { isSuccess: editProfileSuccess, error: editProfileError },
+    ] = useEditProfileMutation();
     const [loadUser, setLoadUser] = useState(false);
     const {} = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
@@ -30,16 +41,29 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     };
 
     useEffect(() => {
-        if (isSuccess) {
+        if (updateAvatarSuccess || editProfileSuccess) {
             setLoadUser(true);
+            toast.success('Profile updated successfully');
         }
-        if (error) {
-            console.log(error);
+        if (updateAvatarError || editProfileError) {
+            console.log(updateAvatarError);
+            toast.error('Update failed. Please try again later');
         }
-    }, [error, isSuccess]);
+    }, [
+        editProfileError,
+        editProfileSuccess,
+        updateAvatarError,
+        updateAvatarSuccess,
+    ]);
 
     const handleSubmit = async (e: any) => {
-        console.log('submit');
+        e.preventDefault();
+
+        if (name !== '') {
+            await editProfile({
+                name,
+            });
+        }
     };
 
     return (
@@ -82,7 +106,7 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                     <div className="800px:w-[50%] m-auto block pb-4">
                         <div className="w-[100%]">
                             <label
-                                className="block pb-2  text-lg font-semibold"
+                                className="block text-lg font-semibold"
                                 htmlFor="name"
                             >
                                 Full name
@@ -97,19 +121,19 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
                         </div>
 
                         <div className="w-[100%] pt-2">
-                            <label className="block pb-2 text-lg font-semibold">
+                            <label className="block text-lg font-semibold">
                                 Email address
                             </label>
                             <input
                                 type="email"
                                 readOnly
-                                className={`${styles.input} !w-[95%] mb-1 800px:mb-4 mt-0 pl-5`}
+                                className={`${styles.input} !w-[95%] mb-1 800px:mb-4 mt-0 pl-5 cursor-not-allowed bg-gray-200`}
                                 required
                                 value={user?.email}
                             />
                         </div>
                         <input
-                            className={`w-full 800px:w-[250px] h-[40px] border border-[#4d1ef9] bg-[#4d1ef9] text-center text-lg text-white font-semibold rounded-[3px] mt-8 cursor-pointer`}
+                            className={`w-full 800px:w-[160px] tracking-wide h-[45px] border border-[#4d1ef9] bg-[#4d1ef9] text-center text-lg text-white font-bold rounded-[3px] mt-8 cursor-pointer hover:shadow-xl hover:bg-[#3b1ef9] ease-linear duration-200`}
                             required
                             value="Update"
                             type="submit"
