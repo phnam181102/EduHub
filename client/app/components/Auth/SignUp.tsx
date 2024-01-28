@@ -1,6 +1,7 @@
-import { styles } from '@/app/styles/styles';
 import { useFormik } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import * as Yup from 'yup';
+
 import {
     AiFillGithub,
     AiOutlineEye,
@@ -10,7 +11,10 @@ import { IoMailOutline } from 'react-icons/io5';
 import { MdLockOutline } from 'react-icons/md';
 import { FaFacebook, FaRegUser } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import * as Yup from 'yup';
+
+import { styles } from '@/app/styles/styles';
+import { useRegisterMutation } from '@/redux/features/auth/authApi';
+import toast from 'react-hot-toast';
 
 type Props = {
     setRoute: (route: string) => void;
@@ -26,12 +30,28 @@ const schema = Yup.object().shape({
 
 const SignUp: FC<Props> = ({ setRoute }) => {
     const [show, setShow] = useState(false);
+    const [register, { isSuccess, data, error }] = useRegisterMutation();
+
+    useEffect(() => {
+        if (isSuccess) {
+            const message = data?.message || 'Registration successfully';
+            toast.success(message);
+            setRoute('Verification');
+        }
+        if (error) {
+            if ('data' in error) {
+                const errorData = error as any;
+                toast.error(errorData.data.message);
+            }
+        }
+    }, [isSuccess, error, data?.message, setRoute]);
 
     const formik = useFormik({
         initialValues: { name: '', email: '', password: '' },
         validationSchema: schema,
         onSubmit: async ({ name, email, password }) => {
-            setRoute('Verification');
+            const data = { name, email, password };
+            await register(data);
         },
     });
 
@@ -104,7 +124,7 @@ const SignUp: FC<Props> = ({ setRoute }) => {
                             errors.password &&
                             touched.password &&
                             'border-red-500'
-                        } ${styles.input}`}
+                        } ${styles.input} `}
                     />
                     {!show ? (
                         <AiOutlineEyeInvisible

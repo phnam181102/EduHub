@@ -17,7 +17,11 @@ import {
 } from '../utils/jwt';
 import { redis } from '../utils/redis';
 import { RequestCustom } from '../@types/custom';
-import { getAllUsersService, getUserById, updateUserRoleService } from '../services/user.service';
+import {
+    getAllUsersService,
+    getUserById,
+    updateUserRoleService,
+} from '../services/user.service';
 
 interface IRegistrationBody {
     name: string;
@@ -128,6 +132,7 @@ export const activateUser = CatchAsyncError(
                 name,
                 email,
                 password,
+                isVerified: true,
             });
 
             res.status(201).json({
@@ -294,16 +299,10 @@ interface IUpdateInfo {
 export const updateInfo = CatchAsyncError(
     async (req: RequestCustom, res: Response, next: NextFunction) => {
         try {
-            const { name, email } = req.body as IUpdateInfo;
+            const { name } = req.body as IUpdateInfo;
             const userId = req.user?._id;
 
             const user = await UserModel.findById(userId);
-
-            if (email && user) {
-                const isEmailExist = await UserModel.findOne({ email });
-                if (isEmailExist)
-                    return next(new ErrorHandler('Email already exists', 400));
-            }
 
             if (name && user) {
                 user.name = name;
@@ -435,37 +434,37 @@ export const updateAvatar = CatchAsyncError(
 
 // get all users --- only for admin
 export const getAllUsers = CatchAsyncError(
-    async (req:RequestCustom, res: Response, next: NextFunction) => {
+    async (req: RequestCustom, res: Response, next: NextFunction) => {
         try {
             getAllUsersService(res);
         } catch (error: any) {
             return next(new ErrorHandler(error.message, 500));
         }
     }
-)
+);
 
 // update user role --- only for admin
 export const updateUserRole = CatchAsyncError(
-    async (req:RequestCustom, res: Response, next: NextFunction) => {
+    async (req: RequestCustom, res: Response, next: NextFunction) => {
         try {
-            const { id, role } = req.body
+            const { id, role } = req.body;
             updateUserRoleService(res, id, role);
         } catch (error: any) {
             return next(new ErrorHandler(error.message, 500));
         }
     }
-)
+);
 
 // delete user --- only for admin
 export const deleteUser = CatchAsyncError(
-    async (req:RequestCustom, res: Response, next: NextFunction) => {
+    async (req: RequestCustom, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-            
+
             const user = await UserModel.findById(id);
 
             if (!user) {
-                return next(new ErrorHandler("User not found", 400));
+                return next(new ErrorHandler('User not found', 400));
             }
 
             await user.deleteOne({ id });
@@ -474,10 +473,10 @@ export const deleteUser = CatchAsyncError(
 
             res.status(200).json({
                 success: true,
-                message: "User deleted successfully"
-            })
+                message: 'User deleted successfully',
+            });
         } catch (error: any) {
             return next(new ErrorHandler(error.message, 500));
         }
     }
-)
+);

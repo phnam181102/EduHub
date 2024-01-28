@@ -40,6 +40,10 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield;
 }
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
 
 body {
     color: rgb(var(--foreground-rgb));

@@ -1,6 +1,6 @@
 import { styles } from '@/app/styles/styles';
 import { useFormik } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
     AiFillGithub,
     AiOutlineEye,
@@ -10,9 +10,13 @@ import { MdLockOutline } from 'react-icons/md';
 import { FaFacebook, FaRegUser } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import * as Yup from 'yup';
+import { useLoginMutation } from '@/redux/features/auth/authApi';
+import toast from 'react-hot-toast';
+import { signIn } from 'next-auth/react';
 
 type Props = {
     setRoute: (route: string) => void;
+    setOpen: (open: boolean) => void;
 };
 
 const schema = Yup.object().shape({
@@ -22,16 +26,31 @@ const schema = Yup.object().shape({
     password: Yup.string().required('Please enter your password').min(6),
 });
 
-const Login: FC<Props> = ({ setRoute }) => {
+const Login: FC<Props> = ({ setRoute, setOpen }) => {
     const [show, setShow] = useState(false);
+    const [login, { isSuccess, error }] = useLoginMutation();
 
     const formik = useFormik({
         initialValues: { email: '', password: '' },
         validationSchema: schema,
         onSubmit: async ({ email, password }) => {
-            console.log(email, password);
+            await login({ email, password });
         },
     });
+
+    useEffect(() => {
+        if (isSuccess) {
+            setOpen(false);
+            toast.success('Login successful');
+        }
+
+        if (error) {
+            if ('data' in error) {
+                const errorData = error as any;
+                toast.error(errorData.data.message);
+            }
+        }
+    }, [isSuccess, error, setOpen]);
 
     const { errors, touched, values, handleChange, handleSubmit } = formik;
 
@@ -127,10 +146,15 @@ const Login: FC<Props> = ({ setRoute }) => {
                 </h5>
 
                 <div className="flex items-center justify-center my-2">
-                    <FcGoogle size={40} className="cursor-pointer mx-2" />
+                    <FcGoogle
+                        size={40}
+                        className="cursor-pointer mx-2"
+                        onClick={() => signIn('google')}
+                    />
                     <AiFillGithub
                         size={40}
                         className="cursor-pointer mx-2 text-gray-800"
+                        onClick={() => signIn('github')}
                     />
                     <FaFacebook
                         size={37}
