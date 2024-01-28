@@ -3,6 +3,7 @@ import cloudinary from 'cloudinary';
 import mongoose from 'mongoose';
 import path from 'path';
 import ejs from 'ejs';
+import axios from 'axios';
 
 import { RequestCustom } from '../@types/custom';
 import { CatchAsyncError } from '../middleware/catchAsyncErrors';
@@ -471,3 +472,20 @@ export const getAllCoursesAdmin = CatchAsyncError(
       }
     }
   );
+
+// generate video url 
+export const generateVideoUrl = CatchAsyncError(async(req:RequestCustom, res: Response, next: NextFunction) => {
+    try {
+        const {videoId} = req.body
+        const response = await axios.post(``, {ttl: 300}, {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`
+            }
+        })
+        res.json(response.data)
+    } catch (error: any) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+})
