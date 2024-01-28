@@ -3,12 +3,14 @@ import CoursePlayer from "@/app/utils/CoursePlayer";
 import { styles } from "@/app/styles/styles";
 import Ratings from "@/app/utils/Ratings";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
+import { BsDot } from "react-icons/bs";
 
 type Props = {
   active: number;
   setActive: (active: number) => void;
   courseData: any;
   handleCourseData: any;
+  isEdit: boolean;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -16,6 +18,7 @@ const CoursePreview: FC<Props> = ({
   setActive,
   courseData,
   handleCourseData,
+  isEdit,
 }) => {
   const discountPercentange =
     ((courseData?.estimatedPrice - courseData?.price) /
@@ -23,6 +26,14 @@ const CoursePreview: FC<Props> = ({
     100;
 
   const discountPercentangePrice = discountPercentange.toFixed(0);
+
+  const prevButton = () => {
+    setActive(active - 1);
+  };
+
+  const createCourse = () => {
+    handleCourseData();
+  };
 
   return (
     <div className="w-[90%] m-auto py-5 mb-5">
@@ -32,8 +43,13 @@ const CoursePreview: FC<Props> = ({
             videoUrl={courseData?.demourl}
             title={courseData?.title}
           />
+          <img
+            src={courseData.thumbnail}
+            alt=""
+            className="h-[700px] w-full object-contain"
+          />
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center text-black">
           <h1 className="pt-5 text-[25px]">
             {courseData?.price === 0 ? "Free" : courseData?.price + "$"}
           </h1>
@@ -66,10 +82,22 @@ const CoursePreview: FC<Props> = ({
             Apply
           </div>
         </div>
-        <p className="pb-1 text-black">Source code included</p>
-        <p className="pb-1 text-black">Full lifetime access</p>
-        <p className="pb-1 text-black">Certificate of completion</p>
-        <p className="pb-3 800px:pb-1 text-black">Premium Support</p>
+        <div className="flex items-center text-black">
+          <BsDot />
+          <p className="pb-1 ">Source code included</p>
+        </div>
+        <div className="flex items-center text-black">
+          <BsDot />
+          <p className="pb-1">Full lifetime access</p>
+        </div>
+        <div className="flex items-center text-black">
+          <BsDot />
+          <p className="pb-1">Certificate of completion</p>
+        </div>
+        <div className="flex items-center text-black">
+          <BsDot />
+          <p className="pb-3 800px:pb-1">Premium Support</p>
+        </div>
       </div>
       <div className="w-full">
         <div className="w-full 800px:pr-5 text-black">
@@ -89,14 +117,16 @@ const CoursePreview: FC<Props> = ({
           </h1>
         </div>
         {courseData?.benefits?.map((item: any, index: number) => (
-          <div className="w-full flex 800px:items-center py-2" key={index}>
-            <div className="w-[150px] mr-1">
+          <div
+            className="w-full flex 800px:items-center py-2 text-black"
+            key={index}
+          >
+            <div className="w-[15px] mr-1">
               <IoCheckmarkDoneOutline size={20} />
             </div>
             <p className="pl-2">{item.title}</p>
           </div>
         ))}
-        <br />
         <br />
         {/* course description */}
         <div className="w-full text-black">
@@ -106,6 +136,22 @@ const CoursePreview: FC<Props> = ({
           <p className="text-[18px] mt-[20px] whitespace-pre-line w-full overflow-hidden">
             {courseData?.description}
           </p>
+        </div>
+        <br />
+        <br />
+      </div>
+      <div className="w-full flex items-center justify-between">
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center cursor-pointer h-[40px] bg-[#4745e4] text-center text-[#fff] rounded mt-8"
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center cursor-pointer h-[40px] bg-[#4745e4] text-center text-[#fff] rounded mt-8"
+          onClick={() => createCourse()}
+        >
+          {isEdit ? "Update" : "Create"}
         </div>
       </div>
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import { FC } from "react";
@@ -49,7 +51,7 @@ const Item: FC<itemsProps> = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const AdminSidebar = () => {
-  // const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
   const [logout, setLogout] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
@@ -126,8 +128,8 @@ const AdminSidebar = () => {
                   alt="profile-user"
                   width={100}
                   height={100}
-                  // src={user.avatar ? user.avatar.url : avatarDefault}
-                  src={avatarDefault}
+                  src={user.avatar ? user.avatar.url : avatarDefault}
+                  // src={avatarDefault}
                   style={{
                     cursor: "pointer",
                     borderRadius: "50%",
@@ -141,14 +143,14 @@ const AdminSidebar = () => {
                   className="!text-[20px] text-black"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {/* {user?.name} */}Phu Nguyen
+                  {user?.name}
                 </Typography>
                 <Typography
                   variant="h6"
                   className="!text-[20px] text-black capitalize"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  {/* - {user?.role} */} - Admin
+                  - {user?.role}
                 </Typography>
               </Box>
             </Box>

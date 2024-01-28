@@ -133,7 +133,7 @@ const CourseContent: FC<Props> = ({
           return (
             <>
               <div
-                className={`w-full bg-[#b7b7b7] p-4 ${
+                className={`w-full p-4 shadow-2xl ${
                   showSectionInput ? "mt-10" : "mb-0"
                 }`}
               >
@@ -269,7 +269,7 @@ const CourseContent: FC<Props> = ({
                           type="text"
                           placeholder="Source Code... (Link title)"
                           className={`${styles.input}`}
-                          value={item.title}
+                          value={link.title}
                           onChange={(e) => {
                             const updatedData = [...courseContentData];
                             updatedData[index].links[linkIndex].title =
@@ -281,7 +281,7 @@ const CourseContent: FC<Props> = ({
                           type="url"
                           placeholder="Source Code Url... (Link url)"
                           className={`${styles.input} mt-6`}
-                          value={item.url}
+                          value={link.url}
                           onChange={(e) => {
                             const updatedData = [...courseContentData];
                             updatedData[index].links[linkIndex].url =

@@ -86,7 +86,7 @@ const CourseInformation: FC<Props> = ({
             rows={8}
             placeholder="Write something amazing..."
             className={`${styles.input} !h-min !py-2`}
-            value={courseInfo.desctiption}
+            value={courseInfo.description}
             onChange={(e: any) =>
               setCourseInfo({ ...courseInfo, description: e.target.value })
             }
@@ -220,7 +220,7 @@ const CourseInformation: FC<Props> = ({
           <input
             type="submit"
             value="Next"
-            className="w-full 800px:w-[180px] h-[40px] bg-[#37a49a] text-center text-[#fff] rounded mt-8 cursor-pointer"
+            className="w-full 800px:w-[180px] h-[40px] bg-[#4745e4] text-center text-[#fff] rounded mt-8 cursor-pointer"
           />
         </div>
         <br />

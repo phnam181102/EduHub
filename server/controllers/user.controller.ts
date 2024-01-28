@@ -226,7 +226,7 @@ export const updateAccessToken = CatchAsyncError(
             const accessToken = jwt.sign(
                 { id: user._id },
                 process.env.ACCESS_TOKEN as string,
-                { expiresIn: '5m' }
+                { expiresIn: '1d' }
             );
 
             const refreshToken = jwt.sign(
@@ -242,10 +242,7 @@ export const updateAccessToken = CatchAsyncError(
             res.cookie('access_token', accessToken, accessTokenOptions);
             res.cookie('refresh_token', refreshToken, refreshTokenOptions);
 
-            res.status(200).json({
-                status: 'success',
-                accessToken,
-            });
+           next();
         } catch (error: any) {
             return next(new ErrorHandler(error.message, 400));
         }

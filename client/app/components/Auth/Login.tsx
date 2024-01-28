@@ -73,7 +73,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
                         placeholder="Username or Email "
                         className={`${
                             errors.email && touched.email && 'border-red-500'
-                        } ${styles.input} `}
+                        } ${styles.input} !pl-8`}
                     />
                 </div>
                 {errors.email && touched.email && (
@@ -98,7 +98,7 @@ const Login: FC<Props> = ({ setRoute, setOpen }) => {
                             errors.password &&
                             touched.password &&
                             'border-red-500'
-                        } ${styles.input}`}
+                        } ${styles.input} !pl-8`}
                     />
                     {!show ? (
                         <AiOutlineEyeInvisible
