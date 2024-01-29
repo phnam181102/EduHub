@@ -26,26 +26,29 @@ userRouter.get('/logout', isAuthenticated, logoutUser);
 userRouter.post('/activate-user', activateUser);
 userRouter.get('/refresh', updateAccessToken);
 
-userRouter.get('/me', isAuthenticated, getUserInfo);
-userRouter.put('/update-info', isAuthenticated, updateInfo);
-userRouter.put('/update-password', isAuthenticated, updatePassword);
-userRouter.put('/update-avatar', isAuthenticated, updateAvatar);
+userRouter.get('/me', updateAccessToken, isAuthenticated, getUserInfo);
+userRouter.put('/update-info', updateAccessToken, isAuthenticated, updateInfo);
+userRouter.put('/update-password', updateAccessToken, isAuthenticated, updatePassword);
+userRouter.put('/update-avatar', updateAccessToken, isAuthenticated, updateAvatar);
 userRouter.post('/social-auth', socialAuth);
 
 userRouter.get(
   "/get-users",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getAllUsers
 );
 userRouter.put(
   "/update-role",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   updateUserRole
 );
 userRouter.delete(
   "/delete-user/:id",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   deleteUser
